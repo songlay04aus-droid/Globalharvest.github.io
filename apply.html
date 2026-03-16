@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Now - Global Harvest Recruitment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        body { font-family: 'Kanit', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+        
+        <div class="mb-6">
+            <a href="Index.html" class="inline-flex items-center text-green-600 hover:text-green-800 font-medium transition duration-200">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Home
+            </a>
+        </div>
+
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-green-700 tracking-tight">Job Application</h2>
+            <p class="mt-2 text-sm text-gray-500">Please fill in your details below to apply.</p>
+        </div>
+
+        <form id="applicationForm" class="space-y-6">
+            <div class="space-y-4">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                        <input id="firstName" name="firstName" type="text" required class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" placeholder="First Name">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                        <input id="lastName" name="lastName" type="text" required class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="nickname" class="block text-sm font-medium text-gray-700">Nickname</label>
+                    <input id="nickname" name="nickname" type="text" class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" placeholder="Nickname">
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input id="phone" name="phone" type="tel" required class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" placeholder="Phone Number">
+                </div>
+                
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" id="submitBtn" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition shadow-md">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <i class="fas fa-save text-green-500 group-hover:text-green-400"></i>
+                    </span>
+                    Save / Submit Application
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // ป้องกันไม่ให้หน้าเว็บ Refresh
+            
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            
+            // เปลี่ยนข้อความและใส่ไอคอนโหลด
+            btn.innerHTML = '<span class="absolute left-0 inset-y-0 flex items-center pl-3"><i class="fas fa-spinner fa-spin text-green-500"></i></span>กำลังส่งข้อมูล...'; 
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            const formData = new FormData(this);
+
+            // ⚠️ อย่าลืมแก้บรรทัดนี้: นำ URL ของ Web App จาก Google Apps Script มาวางแทนข้อความด้านล่าง
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzGd9tMWvaXBMS2_SQWexNwySR8p6cdx9OOr9Rp6VtmZ_mzAtk1CDkHZ6nAN7CtbJs/exec';
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    alert('ส่งข้อมูลการสมัครสำเร็จ!');
+                    document.getElementById('applicationForm').reset(); // ล้างข้อมูล
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('เกิดข้อผิดพลาดในการส่งข้อมูล โปรดลองอีกครั้ง');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                });
+        });
+    </script>
+</body>
+</html>
