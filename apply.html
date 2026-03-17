@@ -82,7 +82,7 @@
 
             fetch(scriptURL, { method: 'POST', body: formData })
                 .then(response => {
-                    alert('ส่งข้อมูลการสมัครสำเร็จ!');
+                    alert('Registration successfully submitted!');
                     document.getElementById('applicationForm').reset(); // ล้างข้อมูล
                     btn.innerHTML = originalText;
                     btn.disabled = false;
@@ -90,7 +90,7 @@
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
-                    alert('เกิดข้อผิดพลาดในการส่งข้อมูล โปรดลองอีกครั้ง');
+                    alert('An error occurred while sending the data. Please try again');
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                     btn.classList.remove('opacity-75', 'cursor-not-allowed');
